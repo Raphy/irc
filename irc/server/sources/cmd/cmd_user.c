@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 22:06:36 2014 raphael defreitas
-** Last update Mon Apr 21 05:05:36 2014 raphael defreitas
+** Last update Mon Apr 21 09:00:35 2014 raphael defreitas
 */
 
 #define		_GNU_SOURCE
@@ -16,7 +16,8 @@
 #include	"cmd.h"
 #include	"defs.h"
 
-t_bool		cmd_user(t_cmd *cmd, t_client *client, char **tokens)
+t_bool		cmd_user(__attribute__((__unused__)) t_cmd *cmd,
+			 t_client *client, char **tokens)
 {
   if (strcmp(tokens[0], "USER") != 0)
     return (FALSE);

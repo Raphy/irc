@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Wed Apr 16 14:27:13 2014 raphael defreitas
-** Last update Sun Apr 20 03:55:11 2014 raphael defreitas
+** Last update Mon Apr 21 20:26:30 2014 raphael defreitas
 */
 
 #include	<signal.h>
@@ -39,7 +39,8 @@ int		main(int argc, char **argv)
       print_usage(stderr, argv[0]);
       return (EXIT_FAILURE);
     }
-  if (srv_ctor(&g_srv, atoi(argv[1])) == RET_FAILURE)
+  if (srv_ctor(&g_srv, atoi(argv[1]), argc > 2 ? atoi(argv[2]) : 300) ==
+      RET_FAILURE)
     {
       srv_dtor(&g_srv);
       return (EXIT_FAILURE);

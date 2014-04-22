@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Fri Apr 18 22:40:52 2014 raphael defreitas
-** Last update Mon Apr 21 00:38:24 2014 raphael defreitas
+** Last update Mon Apr 21 20:28:17 2014 raphael defreitas
 */
 
 #ifndef		SRV_H_
@@ -29,9 +29,10 @@ typedef	struct
   char		created[128];
   t_cmd		*cmd_handlers[CMD_NBR + 1];
   t_list	channels;
+  int		timeout;
 }		t_srv;
 
-int		srv_ctor(t_srv *this, int port);
+int		srv_ctor(t_srv *this, int port, int timeout);
 void		srv_dtor(t_srv *this);
 
 void		srv_log(t_client *client, char *format, ...);

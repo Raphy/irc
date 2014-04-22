@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 18 22:52:32 2014 raphael defreitas
-** Last update Mon Apr 21 01:12:53 2014 raphael defreitas
+** Last update Mon Apr 21 22:18:22 2014 raphael defreitas
 */
 
 #define		_GNU_SOURCE
@@ -54,13 +54,17 @@ static void	init_cmd_handlers(t_srv *this)
   this->cmd_handlers[c++] = cmd_new(this, &cmd_pong);
   this->cmd_handlers[c++] = cmd_new(this, &cmd_join);
   this->cmd_handlers[c++] = cmd_new(this, &cmd_privmsg);
+  this->cmd_handlers[c++] = cmd_new(this, &cmd_quit);
+  this->cmd_handlers[c++] = cmd_new(this, &cmd_who);
+  this->cmd_handlers[c++] = cmd_new(this, &cmd_whois);
   this->cmd_handlers[c] = NULL;
 }
 
-int		srv_ctor(t_srv *this, int port)
+int		srv_ctor(t_srv *this, int port, int timeout)
 {
   time_t	now;
 
+  this->timeout = timeout;
   strcpy(this->hostname, "Unknown");
   now = time(NULL);
   strftime (this->created, 128, "%a %b %d %Y at %H:%M:%S %Z", localtime(&now));

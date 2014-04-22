@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 04:49:15 2014 raphael defreitas
-** Last update Mon Apr 21 05:17:15 2014 raphael defreitas
+** Last update Mon Apr 21 21:38:22 2014 raphael defreitas
 */
 
 #define		_BSD_SOURCE
@@ -14,11 +14,28 @@
 #include	<string.h>
 #include	<sys/types.h>
 
+#include	"channel.h"
 #include	"client.h"
 #include	"defs.h"
 #include	"list.h"
 #include	"srv.h"
 #include	"utils.h"
+
+static void	disconnect(t_client *client)
+{
+  t_channel	*channel;
+  t_iterator	iterator;
+  t_item	*item;
+
+  iterator_ctor(&iterator, &client->channels, IT_DATA);
+  while ((channel = iterator_current(&iterator)))
+    {
+      iterator_next(&iterator);
+      if ((item = list_find(&channel->clients, &client_find_by_ptr, client,
+			    IT_ITEM)))
+	list_unlink(&channel->clients, item);
+    }
+}
 
 void		srv_treat_client(t_srv *this, t_item *item, t_client *client)
 {
@@ -31,10 +48,7 @@ void		srv_treat_client(t_srv *this, t_item *item, t_client *client)
 	{
 	  i = 0;
 	  while (commands[i])
-	    {
-	      srv_cmd(this, client, commands[i]);
-	      i++;
-	    }
+	    srv_cmd(this, client, commands[i++]);
 	  free(commands);
 	}
       client->has_data_in = FALSE;
@@ -45,6 +59,7 @@ void		srv_treat_client(t_srv *this, t_item *item, t_client *client)
   if (client->disconnected)
     {
       srv_log(client, "Disconnected");
+      disconnect(client);
       client_delete(list_unlink(&this->clients, item));
     }
 }

@@ -5,9 +5,10 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 01:05:18 2014 raphael defreitas
-** Last update Mon Apr 21 05:16:23 2014 raphael defreitas
+** Last update Mon Apr 21 20:28:30 2014 raphael defreitas
 */
 
+#define		_GNU_SOURCE
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<sys/select.h>
@@ -92,19 +93,19 @@ void			srv_loop(t_srv *this)
   struct timeval	tv;
   int			ret;
 
-  tv.tv_sec = 30;
+  tv.tv_sec = this->timeout;
   tv.tv_usec = 0;
   printf("+--------------------------------------------------------------+\n");
   printf("|                       RAPHY IRC SERVER                       |\n");
   printf("+--------------------------------------------------------------+\n");
-  printf("Hostname: %s\n", this->hostname);
+  printf("Hostname: %s\tTimeout: %d\n", this->hostname, this->timeout);
   set_fds(this);
   while ((ret = select(FD_SETSIZE, &this->read_fds, NULL, NULL, &tv)) >= 0)
     {
       if (ret == 0)
 	{
 	  srv_ping_pong(this);
-	  tv.tv_sec = 30;
+	  tv.tv_sec = this->timeout;
 	  tv.tv_usec = 0;
 	}
       select_treat_clients(this);

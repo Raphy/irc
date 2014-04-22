@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 22:06:36 2014 raphael defreitas
-** Last update Mon Apr 21 05:15:57 2014 raphael defreitas
+** Last update Mon Apr 21 21:56:47 2014 raphael defreitas
 */
 
 #include	<string.h>
@@ -26,7 +26,7 @@ static void	respond(t_srv *srv, t_client *client, t_channel *channel)
   if (channel->topic)
     client_out(client, ":%s %d %s %s :%s\r\n", srv->hostname, RPL_TOPIC,
 	       client->nickname, channel->name, channel->topic);
-  client_out(client, ":%s %d %s = %s :@RaphyTheGeek ", srv->hostname,
+  client_out(client, ":%s %d %s = %s :", srv->hostname,
 	     RPL_NAMREPLY, client->nickname, channel->name);
   iterator_ctor(&iterator, &channel->clients, IT_DATA);
   while ((other = iterator_current(&iterator)))
@@ -36,8 +36,8 @@ static void	respond(t_srv *srv, t_client *client, t_channel *channel)
 		 iterator_current(&iterator) ? " " : "");
     }
   client_out(client, "\r\n");
-  client_out(client, ":%s %d %s %s :End of /NAMES list.\r\n", srv->hostname,
-	     RPL_ENDOFNAMES, client->nickname, channel->name);
+  client_out(client, ":%s %d %s %s :End of /NAMES list.\r\n",
+	     srv->hostname, RPL_ENDOFNAMES, client->nickname, channel->name);
 }
 
 static void	warn(t_client *client, t_channel *channel)
@@ -49,7 +49,7 @@ static void	warn(t_client *client, t_channel *channel)
   while ((dest = iterator_current(&iterator)))
     {
       iterator_next(&iterator);
-      client_out(dest, ":%s!~%s@%s JOIN :%s\r\n", client->nickname,
+      client_out(dest, ":%s!%s@%s JOIN %s\r\n", client->nickname,
 		 client->name, client->server, channel->name);
     }
 }

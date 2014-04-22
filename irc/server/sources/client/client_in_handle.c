@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 03:46:02 2014 raphael defreitas
-** Last update Sat Apr 19 05:27:39 2014 raphael defreitas
+** Last update Mon Apr 21 06:04:11 2014 raphael defreitas
 */
 
 #include	<stdio.h>
@@ -36,8 +36,8 @@ void		client_in_handle(t_client *this)
 	  if (this->buf_in == NULL)
 	    this->disconnected = TRUE;
 	}
-      if (this->buf_in[buf_len - 2] != '\r' &&
-	  this->buf_in[buf_len - 1] != '\n')
+      if (buf_len < 3 || (this->buf_in[buf_len - 2] != '\r' &&
+			   this->buf_in[buf_len - 1] != '\n'))
 	this->has_data_in = FALSE;
     }
   else

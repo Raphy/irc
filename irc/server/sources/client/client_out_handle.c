@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 04:40:04 2014 raphael defreitas
-** Last update Sun Apr 20 04:34:31 2014 raphael defreitas
+** Last update Mon Apr 21 18:55:39 2014 raphael defreitas
 */
 
 #include	<string.h>
@@ -22,7 +22,7 @@ void		client_out_handle(t_client *this)
   len = strlen(this->buf_out);
   if (len > 0)
     {
-      srv_log(this, "Response: %s", this->buf_out);
+      srv_log(this, "OUT: %s", this->buf_out);
       if (socket_write(this->socket, this->buf_out, len) > -1)
 	{
 	  this->has_data_out = FALSE;

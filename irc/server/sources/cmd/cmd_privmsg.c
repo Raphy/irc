@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 22:06:36 2014 raphael defreitas
-** Last update Mon Apr 21 05:14:53 2014 raphael defreitas
+** Last update Mon Apr 21 21:46:12 2014 raphael defreitas
 */
 
 #include	<string.h>
@@ -29,13 +29,8 @@ static t_bool	check_tokens(t_srv *srv, t_client *client, char **tokens)
 		 srv->hostname, ERR_NEEDMOREPARAMS);
       return (TRUE);
     }
-  /* Todo: Check if the user is in the channel */
   if (tokens[2])
-    {
-      if (tokens[2][0] == ':')
-	tokens[2]++;
-      len = strlen(tokens[2]);
-    }
+    len = strlen(tokens[2]);
   if (!tokens[2] || len <= 0)
     {
       client_out(client, ":%s %d * :No text to send\r\n",
@@ -45,24 +40,36 @@ static t_bool	check_tokens(t_srv *srv, t_client *client, char **tokens)
   return (FALSE);
 }
 
-static void	send_msg(t_client *dest, t_client *client, char **tokens)
+static void	chan_msg(t_channel *channel, t_client *client, const char *msg)
 {
-  int		i;
+  t_iterator	iterator;
+  t_client	*dest;
 
-  client_out(dest, ":%s!%s@%s PRIVMSG %s :", client->nickname,
-	     client->name, client->server, tokens[1]);
-  i = 2;
-  while (tokens[i])
-    client_out(dest, "%s ", tokens[i++]);
-  client_out(dest, "\r\n");
+  iterator_ctor(&iterator, &channel->clients, IT_DATA);
+  while ((dest = iterator_current(&iterator)))
+    {
+      iterator_next(&iterator);
+      if (dest != client)
+	client_out(dest, ":%s!%s@%s PRIVMSG %s :%s\r\n", client->nickname,
+		   client->name, client->server, channel->name, msg);
+    }
+}
+
+static void	user_msg(t_srv *srv, t_client *client, const char *nick,
+			 const char *msg)
+{
+  t_client	*dest;
+
+  dest = list_find(&srv->clients, &client_find_by_nick, nick, IT_DATA);
+  if (dest && dest != client)
+    client_out(dest, ":%s!%s@%s PRIVMSG %s :%s\r\n", client->nickname,
+	       client->name, client->server, dest->nickname, msg);
 }
 
 t_bool		cmd_privmsg(t_cmd *cmd, t_client *client, char **tokens)
 {
   t_srv		*srv;
   t_channel	*channel;
-  t_iterator	iterator;
-  t_client	*dest;
 
   if (strcmp(tokens[0], "PRIVMSG") != 0)
     return (FALSE);
@@ -72,14 +79,8 @@ t_bool		cmd_privmsg(t_cmd *cmd, t_client *client, char **tokens)
   channel = list_find(&client->channels, &channel_find_by_name, tokens[1],
 		      IT_DATA);
   if (channel)
-    {
-      iterator_ctor(&iterator, &channel->clients, IT_DATA);
-      while ((dest = iterator_current(&iterator)))
-	{
-	  iterator_next(&iterator);
-	  if (dest != client)
-	    send_msg(dest, client, tokens);
-	}
-    }
+    chan_msg(channel, client, tokens[2]);
+  else
+    user_msg(srv, client, tokens[1], tokens[2]);
   return (TRUE);
 }

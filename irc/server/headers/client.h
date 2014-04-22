@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Sat Apr 19 03:36:40 2014 raphael defreitas
-** Last update Mon Apr 21 01:17:31 2014 raphael defreitas
+** Last update Mon Apr 21 18:43:07 2014 raphael defreitas
 */
 
 #ifndef		CLIENT_H_
@@ -18,7 +18,7 @@
 # include	"socket.h"
 
 # ifndef	BUF_SIZE
-#  define	BUF_SIZE	1024
+#  define	BUF_SIZE	4096
 # endif /* !BUF_SIZE */
 
 typedef	struct
@@ -50,6 +50,7 @@ int		client_ctor(t_client *this, t_socket *socket);
 void		client_dtor(t_client *this);
 
 int		client_find_by_ptr(t_client *client1, t_client *client2);
+int		client_find_by_nick(t_client *client1, const char *nick);
 
 t_socket	*client_socket(t_client *this);
 

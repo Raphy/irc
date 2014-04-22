@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Sat Apr 19 05:19:26 2014 raphael defreitas
-** Last update Sun Apr 20 02:43:54 2014 raphael defreitas
+** Last update Mon Apr 21 18:56:24 2014 raphael defreitas
 */
 
 #ifndef		PROTOCOL_H_
@@ -152,5 +152,7 @@ typedef	enum
     ERR_UMODEUNKNOWNFLAG = 501,
     ERR_USERSDONTMATCH = 502
   }		t_code;
+
+char	**protocol_parse(const char *cmd);
 
 #endif /* PROTOCOL_H_ */

@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 22:06:36 2014 raphael defreitas
-** Last update Mon Apr 21 05:14:24 2014 raphael defreitas
+** Last update Mon Apr 21 18:21:23 2014 raphael defreitas
 */
 
 #define		_GNU_SOURCE
@@ -13,6 +13,7 @@
 #include	<stdlib.h>
 #include	<string.h>
 
+#include	"channel.h"
 #include	"client.h"
 #include	"cmd.h"
 #include	"defs.h"
@@ -50,7 +51,7 @@ static void	warn(t_client *client, const char *nickname)
       while ((dest = iterator_current(&client_it)))
 	{
 	  iterator_next(&client_it);
-	  client_out(dest, "%s!~%s@%s NICK :%s\r\n", client->nickname,
+	  client_out(dest, ":%s!%s@%s NICK :%s\r\n", client->nickname,
 		     client->name, client->server, nickname);
 	}
     }
@@ -67,7 +68,7 @@ t_bool		cmd_nick(t_cmd *cmd, t_client *client, char **tokens)
     {
       if (nickname_used(srv, tokens[1]))
 	{
-	  client_out(client, ":%s %d * :Nickname is already in use\r\n",
+	  client_out(client, ":%s %d :Nickname is already in use\r\n",
 		     srv->hostname, ERR_NONICKNAMEGIVEN, client->name);
 	  return (TRUE);
 	}
@@ -77,7 +78,7 @@ t_bool		cmd_nick(t_cmd *cmd, t_client *client, char **tokens)
       client->nickname = strdup(tokens[1]);
       return (TRUE);
     }
-  client_out(client, ":%s %d * :No nickname given\r\n",
+  client_out(client, ":%s %d :No nickname given\r\n",
 	     srv->hostname, ERR_NONICKNAMEGIVEN, client->name);
   return (TRUE);
 }
