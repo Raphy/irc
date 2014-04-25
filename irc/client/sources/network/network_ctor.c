@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 25 11:46:09 2014 raphael defreitas
-** Last update Fri Apr 25 11:53:21 2014 raphael defreitas
+** Last update Fri Apr 25 15:11:34 2014 raphael defreitas
 */
 
 #include	<stdlib.h>
@@ -20,13 +20,14 @@ int		network_ctor(t_network *this)
   this->server = NULL;
   FD_ZERO(&this->read_fds);
   FD_ZERO(&this->write_fds);
-  this->in_buffer = NULL;
-  this->out_buffer = NULL;
-  this->has_in_data = FALSE;
-  this->has_out_data = FALSE;
-  if (!(this->server = socket_new()) ||
-      !(this->in_buffer = calloc(SOCK_BUF_LEN, sizeof(char))) ||
-      !(this->out_buffer = calloc(SOCK_BUF_LEN, sizeof(char))))
+  this->buf_in = NULL;
+  this->buf_out = NULL;
+  this->has_data_in = FALSE;
+  this->has_data_out = FALSE;
+  if (!(this->buf_in = calloc(SOCK_BUF_LEN, sizeof(char))) ||
+      !(this->buf_out = calloc(SOCK_BUF_LEN, sizeof(char))))
     return (RET_FAILURE);
+  this->buf_in_size = SOCK_BUF_LEN;
+  this->buf_out_size = SOCK_BUF_LEN;
   return (RET_SUCCESS);
 }

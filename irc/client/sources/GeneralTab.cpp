@@ -5,7 +5,7 @@
 // Login   <defrei_r@epitech.net>
 // 
 // Started on  Wed Apr 23 18:37:33 2014 raphael defreitas
-// Last update Fri Apr 25 10:38:47 2014 raphael defreitas
+// Last update Fri Apr 25 14:14:40 2014 raphael defreitas
 //
 
 #include	<gdk/gdk.h>
@@ -52,6 +52,11 @@ Gtk::Widget* GeneralTab::getWidget()
   return this;
 }
 
+sigc::signal<void, const std::string&>& GeneralTab::signal_command_sent()
+{
+  return m_signal_command_sent;
+}
+
 const std::string& GeneralTab::getTitle() const
 {
   return m_title;
@@ -61,7 +66,8 @@ void GeneralTab::sendMessage()
 {
   if (m_cmd_entry.get_text().length() > 0)
     {
-      appendText(m_cmd_entry.get_text());
+      //appendText(m_cmd_entry.get_text());
+      m_signal_command_sent.emit(m_cmd_entry.get_text());
       m_cmd_entry.set_text("");
     }
 }

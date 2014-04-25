@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Thu Apr 24 13:19:15 2014 raphael defreitas
-** Last update Fri Apr 25 10:40:12 2014 raphael defreitas
+** Last update Fri Apr 25 17:00:16 2014 raphael defreitas
 */
 
 #ifndef		NETWORKWORKER_H_
@@ -26,8 +26,14 @@ class NetworkWorker
 
   void start();
   void stop();
+  bool connect(const std::string& host, int port);
 
   Glib::Dispatcher& dispatcher();
+  bool stopped() const;
+
+  bool hasInData();
+  std::string* getInData();
+  void putOut(const char* format, ...);
 
  private:
   void run();

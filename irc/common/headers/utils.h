@@ -5,20 +5,18 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Sat Apr 19 17:07:39 2014 raphael defreitas
-** Last update Fri Apr 25 01:04:58 2014 raphael defreitas
+** Last update Fri Apr 25 14:26:28 2014 raphael defreitas
 */
 
 #ifndef		UTILS_H_
 # define	UTILS_H_
 
-# ifdef		_cplusplus
-extern "C" {
-# endif /* !_cplusplus */
+# include	<glib.h>
+
+G_BEGIN_DECLS
 
 char		**strtoarr(const char *, const char *);
 
-# ifdef		_cplusplus
-}
-# endif /* !_cplusplus */
+G_END_DECLS
 
 #endif /* !UTILS_H_*/

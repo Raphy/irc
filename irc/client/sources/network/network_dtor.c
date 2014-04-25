@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 25 11:50:37 2014 raphael defreitas
-** Last update Fri Apr 25 11:51:33 2014 raphael defreitas
+** Last update Fri Apr 25 15:10:41 2014 raphael defreitas
 */
 
 #include	<stdlib.h>
@@ -17,6 +17,6 @@ void		network_dtor(t_network *this)
 {
   if (this->server)
     socket_delete(this->server);
-  free(this->in_buffer);
-  free(this->out_buffer);
+  free(this->buf_in);
+  free(this->buf_out);
 }

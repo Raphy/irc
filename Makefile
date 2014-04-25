@@ -5,7 +5,7 @@
 ## Login   <defrei_r@epitech.net>
 ## 
 ## Started on  Wed Apr 16 14:28:43 2014 raphael defreitas
-## Last update Fri Apr 25 11:41:17 2014 raphael defreitas
+## Last update Fri Apr 25 14:28:56 2014 raphael defreitas
 ##
 
 ## Global settings
@@ -21,7 +21,7 @@ LIBS			=	libsocket liblist
 ## Common settings
 COMMON_SOURCES		=	$(shell find ./irc/common/sources -name "*.c" -type f)
 COMMON_OBJECTS		=	$(COMMON_SOURCES:.c=.o)
-COMMON_CFLAGS		=	-I ./irc/common/headers  -I ./libs/libsocket/headers -I ./libs/liblist/headers
+COMMON_CFLAGS		=	-I ./irc/common/headers  -I ./libs/libsocket/headers -I ./libs/liblist/headers $(shell pkg-config --cflags glib-2.0)
 
 ## Server settings
 SERVER_NAME		=	server

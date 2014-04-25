@@ -5,13 +5,14 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Fri Apr 25 10:21:24 2014 raphael defreitas
-** Last update Fri Apr 25 10:34:24 2014 raphael defreitas
+** Last update Fri Apr 25 14:07:04 2014 raphael defreitas
 */
 
 #ifndef		ITAB_H_
 # define	ITAB_H_
 
 # include	<gtkmm/widget.h>
+# include	<sigc++/sigc++.h>
 # include	<string>
 
 class ITab
@@ -22,6 +23,7 @@ class ITab
   virtual Gtk::Widget* getWidget() = 0;
   virtual const std::string& getTitle() const = 0;
   virtual void appendText(const std::string& str) = 0;
+  virtual sigc::signal<void, const std::string&>& signal_command_sent() = 0;
 };
 
 #endif /* !ITAB_H_*/

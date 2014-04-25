@@ -5,18 +5,18 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Fri Apr 25 00:35:59 2014 raphael defreitas
-** Last update Fri Apr 25 11:50:15 2014 raphael defreitas
+** Last update Fri Apr 25 18:44:51 2014 raphael defreitas
 */
 
 #ifndef		NETWORK_H_
 # define	NETWORK_H_
 
+# include	<glib.h>
 
-# ifdef		_cplusplus
-extern "C" {
-# endif /* !_cplusplus */
+G_BEGIN_DECLS
 
 # include	<sys/select.h>
+# include	<time.h>
 
 # include	"defs.h"
 # include	"socket.h"
@@ -26,23 +26,27 @@ extern "C" {
     t_socket	*server;
     fd_set	read_fds;
     fd_set	write_fds;
-    char	*in_buffer;
-    t_bool	has_in_data;
-    char	*out_buffer;
-    t_bool	has_out_data;
+    char	*buf_in;
+    size_t	buf_in_size;
+    t_bool	has_data_in;
+    char	*buf_out;
+    size_t	buf_out_size;
+    t_bool	has_data_out;
+    t_bool	disconnected;
+    struct timeval tv;
   }		t_network;
 
-extern int		network_ctor(t_network *);
+int		network_ctor(t_network *);
 void		network_dtor(t_network *);
 
 int		network_connect(t_network *, const char *, int);
+void		network_set_fds(t_network *);
 int		network_select(t_network *);
 
 void		network_recv(t_network *);
 void		network_send(t_network *);
+void		network_put_out(t_network *, const char *, va_list);
 
-# ifdef		_cplusplus
-}
-# endif /* !_cplusplus */
+G_END_DECLS
 
 #endif /* !NETWORK_H_*/

@@ -5,7 +5,7 @@
 // Login   <defrei_r@epitech.net>
 // 
 // Started on  Wed Apr 23 18:36:42 2014 raphael defreitas
-// Last update Fri Apr 25 11:48:41 2014 raphael defreitas
+// Last update Fri Apr 25 14:38:41 2014 raphael defreitas
 //
 
 #include	<cstdlib>
@@ -28,26 +28,15 @@ void		dispatch()
 
 int		main(int argc, char **argv)
 {
-  Gtk::Main	app(Gtk::Main(argc, argv));
-  MainWindow	main_window;
-  GeneralTab	*general_tab = new GeneralTab("General");
-  NetworkWorker	network_worker;
-  t_network	net;
+  Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
+  MainWindow main_window;
+  GeneralTab *general_tab = new GeneralTab("General");
 
-  network_ctor(&net);
-
+  general_tab->signal_command_sent().connect(sigc::mem_fun(main_window, &MainWindow::onCommandSent));
   main_window.addTab(general_tab);
   main_window.show_all();
 
-  network_worker.dispatcher().connect(sigc::ptr_fun(&dispatch));
-  network_worker.dispatcher().connect(sigc::mem_fun(main_window, &MainWindow::dispatch));
+  app->run(main_window);
 
-  /*
-    network_worker.signal_data_received().connect(sigc::ptr_fun(&data_recv));
-    network_worker.signal_data_received().connect(sigc::mem_fun(general_tab, &GeneralTab::appendText));
-  */
-  
-  network_worker.start();
-  Gtk::Main::run(main_window);
   return (EXIT_SUCCESS);
 }
