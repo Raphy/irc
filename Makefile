@@ -5,7 +5,7 @@
 ## Login   <defrei_r@epitech.net>
 ## 
 ## Started on  Wed Apr 16 14:28:43 2014 raphael defreitas
-## Last update Fri Apr 25 01:02:36 2014 raphael defreitas
+## Last update Fri Apr 25 11:41:17 2014 raphael defreitas
 ##
 
 ## Global settings
@@ -66,7 +66,7 @@ libraries-re		:
 ## Client rules
 $(CLIENT_NAME)		:	CFLAGS += $(COMMON_CFLAGS) $(CLIENT_CFLAGS)
 $(CLIENT_NAME)		:	CXXFLAGS += $(COMMON_CFLAGS) $(CLIENT_CXXFLAGS)
-$(CLIENT_NAME)		:	$(CLIENT_CXXOBJECTS) $(CLIENT_OBJECTS) $(COMMON_OBJECTS) 
+$(CLIENT_NAME)		:	$(COMMON_OBJECTS) $(CLIENT_OBJECTS) $(CLIENT_CXXOBJECTS)
 				$(CXX) -o $(CLIENT_NAME) $(COMMON_OBJECTS) $(CLIENT_OBJECTS) $(CLIENT_CXXOBJECTS) $(CLIENT_LFLAGS)
 
 $(CLIENT_NAME)-clean	:
