@@ -5,7 +5,7 @@
 // Login   <defrei_r@epitech.net>
 // 
 // Started on  Wed Apr 23 18:36:42 2014 raphael defreitas
-// Last update Fri Apr 25 11:39:55 2014 raphael defreitas
+// Last update Fri Apr 25 11:48:41 2014 raphael defreitas
 //
 
 #include	<cstdlib>
@@ -32,6 +32,9 @@ int		main(int argc, char **argv)
   MainWindow	main_window;
   GeneralTab	*general_tab = new GeneralTab("General");
   NetworkWorker	network_worker;
+  t_network	net;
+
+  network_ctor(&net);
 
   main_window.addTab(general_tab);
   main_window.show_all();

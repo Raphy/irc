@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Fri Apr 25 00:35:59 2014 raphael defreitas
-** Last update Fri Apr 25 11:19:05 2014 raphael defreitas
+** Last update Fri Apr 25 11:50:15 2014 raphael defreitas
 */
 
 #ifndef		NETWORK_H_
@@ -32,7 +32,7 @@ extern "C" {
     t_bool	has_out_data;
   }		t_network;
 
-int		network_ctor(t_network *);
+extern int		network_ctor(t_network *);
 void		network_dtor(t_network *);
 
 int		network_connect(t_network *, const char *, int);
