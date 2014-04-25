@@ -5,12 +5,14 @@
 ## Login   <defrei_r@epitech.net>
 ## 
 ## Started on  Wed Apr 16 14:28:43 2014 raphael defreitas
-## Last update Sat Apr 19 18:05:28 2014 raphael defreitas
+## Last update Fri Apr 25 01:02:36 2014 raphael defreitas
 ##
 
 ## Global settings
 CC			?=	clang
+CXX			?=	clang++
 CFLAGS			=	-Wall -Wextra -ansi -pedantic -g
+CXXFLAG			=	-Wall -Wextra -ansi -pedantic -g
 
 ## Libs settings
 LIBS_PATH		=	./libs
@@ -21,14 +23,6 @@ COMMON_SOURCES		=	$(shell find ./irc/common/sources -name "*.c" -type f)
 COMMON_OBJECTS		=	$(COMMON_SOURCES:.c=.o)
 COMMON_CFLAGS		=	-I ./irc/common/headers  -I ./libs/libsocket/headers -I ./libs/liblist/headers
 
-## Client settings
-CLIENT_NAME		=	client
-CLIENT_SOURCES		=	$(shell find ./irc/client/sources -name "*.c" -type f)
-CLIENT_OBJECTS		=	$(CLIENT_SOURCES:.c=.o)
-CLIENT_CFLAGS		=	-I ./irc/client/headers
-CLIENT_LFLAGS		=	-L ./libs/libsocket -lsocket
-CLIENT_LFLAGS		+=	-L ./libs/liblist -llist
-
 ## Server settings
 SERVER_NAME		=	server
 SERVER_SOURCES		=	$(shell find ./irc/server/sources -name "*.c" -type f)
@@ -37,8 +31,20 @@ SERVER_CFLAGS		=	-I ./irc/server/headers
 SERVER_LFLAGS		=	-L ./libs/libsocket -lsocket
 SERVER_LFLAGS		+=	-L ./libs/liblist -llist
 
+## Client settings
+CLIENT_NAME		=	client
+CLIENT_SOURCES		=	$(shell find ./irc/client/sources -name "*.c" -type f)
+CLIENT_CXXSOURCES	=	$(shell find ./irc/client/sources -name "*.cpp" -type f)
+CLIENT_OBJECTS		=	$(CLIENT_SOURCES:.c=.o)
+CLIENT_CXXOBJECTS	=	$(CLIENT_CXXSOURCES:.cpp=.o)
+CLIENT_CFLAGS		=	-I ./irc/client/headers
+CLIENT_CXXFLAGS		=	-I ./irc/client/headers $(shell pkg-config --cflags gtkmm-3.0)
+CLIENT_LFLAGS		=	-L ./libs/libsocket -lsocket
+CLIENT_LFLAGS		+=	-L ./libs/liblist -llist
+CLIENT_LFLAGS		+=	$(shell pkg-config --libs gtkmm-3.0)
+
 ## Global rules
-all			:	libraries $(CLIENT_NAME) $(SERVER_NAME)
+all			:	libraries $(SERVER_NAME) $(CLIENT_NAME)
 
 clean			:	libraries-clean client-clean server-clean
 
@@ -59,11 +65,12 @@ libraries-re		:
 
 ## Client rules
 $(CLIENT_NAME)		:	CFLAGS += $(COMMON_CFLAGS) $(CLIENT_CFLAGS)
-$(CLIENT_NAME)		:	$(COMMON_OBJECTS) $(CLIENT_OBJECTS)
-				$(CC) -o $(CLIENT_NAME) $(COMMON_OBJECTS) $(CLIENT_OBJECTS) $(CLIENT_LFLAGS)
+$(CLIENT_NAME)		:	CXXFLAGS += $(COMMON_CFLAGS) $(CLIENT_CXXFLAGS)
+$(CLIENT_NAME)		:	$(CLIENT_CXXOBJECTS) $(CLIENT_OBJECTS) $(COMMON_OBJECTS) 
+				$(CXX) -o $(CLIENT_NAME) $(COMMON_OBJECTS) $(CLIENT_OBJECTS) $(CLIENT_CXXOBJECTS) $(CLIENT_LFLAGS)
 
 $(CLIENT_NAME)-clean	:
-				rm -rf $(COMMON_OBJECTS) $(CLIENT_OBJECTS)
+				rm -rf $(COMMON_OBJECTS) $(CLIENT_OBJECTS) $(CLIENT_CXXOBJECTS)
 
 $(CLIENT_NAME)-fclean	:	$(CLIENT_NAME)-clean
 				rm -rf $(CLIENT_NAME)

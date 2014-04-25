@@ -5,11 +5,15 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Sat Apr 19 05:19:26 2014 raphael defreitas
-** Last update Mon Apr 21 18:56:24 2014 raphael defreitas
+** Last update Fri Apr 25 01:05:27 2014 raphael defreitas
 */
 
 #ifndef		PROTOCOL_H_
 # define	PROTOCOL_H_
+
+# ifdef		_cplusplus
+extern "C" {
+# endif /* !_cplusplus */
 
 typedef	enum
   {
@@ -153,6 +157,10 @@ typedef	enum
     ERR_USERSDONTMATCH = 502
   }		t_code;
 
-char	**protocol_parse(const char *cmd);
+char	**protocol_parse(const char *);
+
+# ifdef		_cplusplus
+}
+# endif /* !_cplusplus */
 
 #endif /* PROTOCOL_H_ */

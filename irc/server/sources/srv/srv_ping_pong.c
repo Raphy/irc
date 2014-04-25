@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sun Apr 20 03:12:26 2014 raphael defreitas
-** Last update Sun Apr 20 03:53:48 2014 raphael defreitas
+** Last update Tue Apr 22 20:00:18 2014 raphael defreitas
 */
 
 #include	<stdlib.h>
@@ -46,7 +46,8 @@ void		srv_ping_pong(t_srv *this)
       else if (client->pinged && !client->ponged)
 	{
 	  client_out(client, "ERROR :Closing link: %s (Ping timeout: %d " \
-		     "seconds)\r\n", socket_ip(client_socket(client)), 120);
+		     "seconds)\r\n", socket_ip(client_socket(client)),
+		     this->timeout);
 	  client->disconnected = TRUE;
 	}
     }

@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 16:31:18 2014 raphael defreitas
-** Last update Mon Apr 21 21:47:16 2014 raphael defreitas
+** Last update Tue Apr 22 06:04:50 2014 raphael defreitas
 */
 
 #include	<stdio.h>
@@ -21,10 +21,15 @@ void		srv_cmd(t_srv *this, t_client *client, const char *cmd)
 {
   char		**tokens;
   int		i;
+  int		j;
 
   srv_log(client, "IN: %s", cmd);
   if ((tokens = protocol_parse(cmd)))
     {
+      j = 0;
+      while (tokens[j])
+	printf("%s[%s]%s", j == 0 ? "Tokens: " : "", tokens[j++],
+	       tokens[j] ? " " : "\n");
       i = 0;
       while (this->cmd_handlers[i] &&
 	     !this->cmd_handlers[i]->handler(this->cmd_handlers[i],

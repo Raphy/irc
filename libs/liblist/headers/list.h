@@ -5,11 +5,15 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Thu Apr 17 18:53:27 2014 raphael defreitas
-** Last update Mon Apr 21 01:10:40 2014 raphael defreitas
+** Last update Fri Apr 25 01:06:40 2014 raphael defreitas
 */
 
 #ifndef		LIST_H_
 # define	LIST_H_
+
+# ifdef		_cplusplus
+extern "C" {
+# endif /* !_cplusplus */
 
 # include	<sys/types.h>
 
@@ -49,16 +53,16 @@ struct		s_iterator
   t_it_type	type;
 };
 
-t_iterator	*iterator_new(t_list *list, t_it_type type);
-void		iterator_delete(t_iterator *this);
+t_iterator	*iterator_new(t_list *, t_it_type);
+void		iterator_delete(t_iterator *);
 
-int		iterator_ctor(t_iterator *this, t_list *list, t_it_type type);
-void		iterator_dtor(t_iterator *this);
+int		iterator_ctor(t_iterator *, t_list *, t_it_type);
+void		iterator_dtor(t_iterator *);
 
-void		*iterator_current(t_iterator *this);
-void		iterator_next(t_iterator *this);
-void		iterator_prev(t_iterator *this);
-void		iterator_reset(t_iterator *this);
+void		*iterator_current(t_iterator *);
+void		iterator_next(t_iterator *);
+void		iterator_prev(t_iterator *);
+void		iterator_reset(t_iterator *);
 
 /*
 ** +------+
@@ -73,15 +77,15 @@ struct		s_item
   void		(*data_free_fptr)();
 };
 
-t_item		*item_new(void *data, void (*data_free_fptr)());
-void		item_delete(t_item *this);
+t_item		*item_new(void *, void (*)());
+void		item_delete(t_item *);
 
-int		item_ctor(t_item *this, void *data, void (*data_free_fptr)());
-void		item_dtor(t_item *this);
+int		item_ctor(t_item *, void *, void (*)());
+void		item_dtor(t_item *);
 
-void		*item_data(t_item *this);
-t_item		*item_next(t_item *this);
-t_item		*item_prev(t_item *this);
+void		*item_data(t_item *);
+t_item		*item_next(t_item *);
+t_item		*item_prev(t_item *);
 
 /*
 ** +------+
@@ -96,21 +100,24 @@ struct		s_list
   void		(*data_free_fptr)();
 };
 
-t_list		*list_new(void (*data_free_fptr)());
-void		list_delete(t_list *this);
+t_list		*list_new(void (*)());
+void		list_delete(t_list *);
 
-int		list_ctor(t_list *this, void (*data_free_fptr)());
-void		list_dtor(t_list *this);
+int		list_ctor(t_list *, void (*)());
+void		list_dtor(t_list *);
 
-void		list_dump(t_list *this);
-void		*list_front(t_list *this);
-void		*list_back(t_list *this);
-size_t		list_length(t_list *this);
+void		list_dump(t_list *);
+void		*list_front(t_list *);
+void		*list_back(t_list *);
+size_t		list_length(t_list *);
 
-int		list_push(t_list *this, void *data);
-int		list_enqueue(t_list *this, void *data);
-void		*list_unlink(t_list *this, t_item *item);
-void		*list_find(t_list *this, int (*find_fptr)(), const void *srch,
-			   t_it_type type);
+int		list_push(t_list *, void *);
+int		list_enqueue(t_list *, void *);
+void		*list_unlink(t_list *, t_item *);
+void		*list_find(t_list *, int (*)(), const void *, t_it_type);
+
+# ifdef		_cplusplus
+}
+# endif /* !_cplusplus */
 
 #endif /* !LIST_H_*/

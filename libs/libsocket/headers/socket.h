@@ -5,11 +5,15 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Mon Apr 14 16:45:01 2014 raphael defreitas
-** Last update Sat Apr 19 21:13:09 2014 raphael defreitas
+** Last update Fri Apr 25 02:09:40 2014 raphael defreitas
 */
 
 #ifndef		SOCKET_H_
 # define	SOCKET_H_
+
+# ifdef		_cplusplus
+extern "C" {
+# endif /* !_cplusplus */
 
 # include	<sys/socket.h>
 # include	<netinet/in.h>
@@ -31,6 +35,8 @@
 #  define	SOCK_BUF_LEN	2048
 # endif /* !SOCK_BUF_LEN */
 
+typedef	struct	hostent		t_hostent;
+
 /*
 ** +--------+
 ** | Socket |
@@ -46,22 +52,26 @@ typedef	struct
   t_sockaddr_in	addr;
 }		t_socket;
 
-int		socket_ctor(t_socket *this, int domain, int type, int protocol);
-void		socket_dtor(t_socket *this);
+int		socket_ctor(t_socket *, int, int, int);
+void		socket_dtor(t_socket *);
 
 t_socket	*socket_new(void);
-void		socket_delete(t_socket *this);
+void		socket_delete(t_socket *);
 
-int		socket_fd(t_socket *this);
-const char	*socket_ip(t_socket *this);
+int		socket_fd(t_socket *);
+const char	*socket_ip(t_socket *);
 
-int		socket_connect(t_socket *this, in_addr_t address, int port);
+  int		socket_connect(t_socket *, in_addr_t, int);
 
-int		socket_bind(t_socket *this, in_addr_t address, int port);
-int		socket_listen(t_socket *this, int queue_size);
-t_socket	*socket_accept(t_socket *this);
+int		socket_bind(t_socket *, in_addr_t, int);
+int		socket_listen(t_socket *, int);
+t_socket	*socket_accept(t_socket *);
 
-int		socket_write(t_socket *this, const void *buf, size_t len);
-int		socket_read(t_socket *this, void *buf, size_t len);
+int		socket_write(t_socket *, const void *, size_t);
+  int		socket_read(t_socket *, void *, size_t);
+
+# ifdef		_cplusplus
+}
+# endif /* !_cplusplus */
 
 #endif /* !SOCKET_H_*/
