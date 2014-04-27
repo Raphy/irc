@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 25 11:46:09 2014 raphael defreitas
-** Last update Fri Apr 25 15:11:34 2014 raphael defreitas
+** Last update Sat Apr 26 18:27:30 2014 raphael defreitas
 */
 
 #include	<stdlib.h>
@@ -24,6 +24,7 @@ int		network_ctor(t_network *this)
   this->buf_out = NULL;
   this->has_data_in = FALSE;
   this->has_data_out = FALSE;
+  this->disconnected = TRUE;
   if (!(this->buf_in = calloc(SOCK_BUF_LEN, sizeof(char))) ||
       !(this->buf_out = calloc(SOCK_BUF_LEN, sizeof(char))))
     return (RET_FAILURE);

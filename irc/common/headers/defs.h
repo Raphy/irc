@@ -5,15 +5,15 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Fri Apr 18 20:20:07 2014 raphael defreitas
-** Last update Fri Apr 25 01:04:36 2014 raphael defreitas
+** Last update Sat Apr 26 17:14:17 2014 raphael defreitas
 */
 
 #ifndef		DEFS_H_
 # define	DEFS_H_
 
-# ifdef		_cplusplus
-extern "C" {
-# endif /* !_cplusplus */
+# include	<glib.h>
+
+G_BEGIN_DECLS
 
 # ifndef	RET_ERROR
 #  define	RET_ERROR	-1
@@ -50,8 +50,6 @@ typedef char	t_bool;
 #  define	TRUE	!FALSE
 # endif /* !TRUE */
 
-# ifdef		_cplusplus
-}
-# endif /* !_cplusplus */
+G_END_DECLS
 
 #endif /* !DEFS_H_*/

@@ -5,15 +5,15 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Sat Apr 19 05:19:26 2014 raphael defreitas
-** Last update Fri Apr 25 01:05:27 2014 raphael defreitas
+** Last update Sat Apr 26 17:13:48 2014 raphael defreitas
 */
 
 #ifndef		PROTOCOL_H_
 # define	PROTOCOL_H_
 
-# ifdef		_cplusplus
-extern "C" {
-# endif /* !_cplusplus */
+# include	<glib.h>
+
+G_BEGIN_DECLS
 
 typedef	enum
   {
@@ -159,8 +159,6 @@ typedef	enum
 
 char	**protocol_parse(const char *);
 
-# ifdef		_cplusplus
-}
-# endif /* !_cplusplus */
+G_END_DECLS
 
 #endif /* PROTOCOL_H_ */

@@ -5,7 +5,7 @@
 // Login   <defrei_r@epitech.net>
 // 
 // Started on  Thu Apr 24 13:23:39 2014 raphael defreitas
-// Last update Fri Apr 25 18:49:47 2014 raphael defreitas
+// Last update Sun Apr 27 00:11:14 2014 raphael defreitas
 //
 
 #include	<cstdarg>
@@ -21,9 +21,10 @@
 #include	"utils.h"
 
 NetworkWorker::NetworkWorker() :
-  m_thread(NULL)
+  m_thread(NULL), m_stop(true)
 {
   network_ctor(&m_network);
+  m_stop = false;
 }
 
 NetworkWorker::~NetworkWorker()
@@ -34,38 +35,31 @@ NetworkWorker::~NetworkWorker()
 void NetworkWorker::start()
 {
   if (!m_thread)
-    m_thread = Glib::Threads::Thread::create(sigc::mem_fun(*this, &NetworkWorker::run));
+    {
+      m_stop = false;
+      m_thread = Glib::Threads::Thread::create(sigc::mem_fun(*this, &NetworkWorker::run));
+    }
 }
 
-void NetworkWorker::stop()
+bool NetworkWorker::connect(const std::string& host, int port, const std::string& nick)
 {
-  {    
-    Glib::Threads::Mutex::Lock lock(m_mutex);    
-    m_stop = true;
+  {
+    Glib::Threads::Mutex::Lock lock(m_mutex);
+    if (!m_network.disconnected || network_connect(&m_network, host.c_str(), port) == RET_FAILURE)
+      return false;
+    this->start();
   }
-  throw Glib::Threads::Thread::Exit();
-}
-
-bool NetworkWorker::connect(const std::string& host, int port)
-{
-  if (m_thread)
-    return true;
-  /*putOut("NICK newbie%d\r\nUSER myIrc Dom %s :myirc of Raphy & Bart\r\n",
-    rand() % 1000, host.c_str());*/
-  if (network_connect(&m_network, host.c_str(), port) == RET_FAILURE)
-    return false;
-  this->start();
+  putOut("NICK %s\r\nUSER %s %s %s :myirc of Raphy & Bart\r\n",
+	 nick.c_str(), nick.c_str(), nick.c_str(), host.c_str());    
   return true;
 }
 
 Glib::Dispatcher& NetworkWorker::dispatcher()
 {
-  return m_dispatcher;
-}
-
-bool NetworkWorker::stopped() const
-{
-  return m_stop;
+  {
+    Glib::Threads::Mutex::Lock lock(m_mutex);
+    return m_dispatcher;
+  }
 }
 
 void NetworkWorker::run()
@@ -74,40 +68,57 @@ void NetworkWorker::run()
     {
       {
 	Glib::Threads::Mutex::Lock lock(m_mutex);
-	if (m_stop)
+	if (m_network.disconnected)
 	  break;
 	network_set_fds(&m_network);
-	m_network.tv.tv_sec = 3;
+	m_network.tv.tv_sec = 1;
 	m_network.tv.tv_usec = 0;	
       }
-      std::cout << "Select.." << std::endl;
       network_select(&m_network);
       {
 	Glib::Threads::Mutex::Lock lock(m_mutex);
 	network_recv(&m_network);
 	network_send(&m_network);
 	m_stop = m_network.disconnected;
+	if (m_network.has_data_in)
+	  {
+	    std::string data(m_network.buf_in);
+	    m_network.buf_in[0] = 0;
+	    m_network.has_data_in = FALSE;
+	    int pos;
+	    while ((pos = data.find("\r\n")) != std::string::npos)
+	      {
+		m_in_data.push(data.substr(0, pos));
+		data = data.substr(pos + 2);
+	      }
+	    strcpy(m_network.buf_in, data.c_str());
+	    strcat(m_network.buf_in, "\0");
+	    if (strlen(m_network.buf_in) > 0)
+	      m_network.has_data_in = TRUE;
+	  }	
       }
-      m_dispatcher.emit();
+      {
+	Glib::Threads::Mutex::Lock lock(m_mutex);
+	m_dispatcher.emit();
+      }
     }
-}
-
-bool NetworkWorker::hasInData()
-{
-  return strstr(m_network.buf_in, "\r\n") != NULL;
-}
-
-std::string* NetworkWorker::getInData()
-{
-  std::string* data = new std::string(m_network.buf_in);
-  m_network.buf_in[0] = 0;
-  return data;
 }
 
 void NetworkWorker::putOut(const char* format, ...)
 {
-  va_list ap;
-  va_start(ap, format);
-  network_put_out(&m_network, format, ap);
-  va_end(ap);
+  {
+    Glib::Threads::Mutex::Lock lock(m_mutex);
+    va_list ap;
+    va_start(ap, format);
+    network_put_out(&m_network, format, ap);
+    va_end(ap);
+  }
+}
+
+std::queue<std::string>& NetworkWorker::getData()
+{
+  {
+    Glib::Threads::Mutex::Lock lock(m_mutex);
+    return m_in_data;
+  }
 }

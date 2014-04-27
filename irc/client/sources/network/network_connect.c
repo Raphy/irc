@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 25 13:40:41 2014 raphael defreitas
-** Last update Fri Apr 25 18:47:18 2014 raphael defreitas
+** Last update Sat Apr 26 18:29:02 2014 raphael defreitas
 */
 
 #include	<netdb.h>
@@ -22,7 +22,8 @@ int		network_connect(t_network *this, const char *h, int p)
       socket_ctor(this->server, AF_INET, SOCK_STREAM, 0) == RET_SUCCESS &&
       (hi = gethostbyname(h)) &&
       socket_connect(this->server, *(in_addr_t *)hi->h_addr_list[0], p) ==
-      RET_SUCCESS)
-    return (RET_SUCCESS);
-  return (RET_FAILURE);
+      RET_FAILURE)
+    return (RET_FAILURE);
+  this->disconnected = FALSE;
+  return (RET_SUCCESS);
 }

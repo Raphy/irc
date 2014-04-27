@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Mon Apr 21 18:56:42 2014 raphael defreitas
-** Last update Mon Apr 21 21:47:58 2014 raphael defreitas
+** Last update Sat Apr 26 19:03:00 2014 raphael defreitas
 */
 
 #include	<ctype.h>
@@ -46,7 +46,8 @@ static void	fill_trail(char **tokens, char *cmd, int *i, size_t size)
 {
   char		end;
 
-  (*i)++;
+  if (*i != 0)
+    (*i)++;
   end = cmd[*i] && !isprint(cmd[*i]) ? cmd[*i] : '\0';
   if (size == 0)
     end = ' ';

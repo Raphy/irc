@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Wed Apr 23 18:36:26 2014 raphael defreitas
-** Last update Fri Apr 25 14:04:58 2014 raphael defreitas
+** Last update Sat Apr 26 15:53:12 2014 raphael defreitas
 */
 
 #ifndef		GENERALTAB_H_

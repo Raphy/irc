@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 25 15:18:43 2014 raphael defreitas
-** Last update Fri Apr 25 17:03:02 2014 raphael defreitas
+** Last update Sun Apr 27 00:13:51 2014 raphael defreitas
 */
 
 #define		_GNU_SOURCE
@@ -33,6 +33,5 @@ void		network_put_out(t_network *this, const char *format, va_list ap)
       if (this->buf_out == NULL)
 	this->disconnected = TRUE;
     }
-  printf("network_put_out: %s\n", tmp);
   this->has_data_out = TRUE;
 }

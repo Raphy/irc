@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Wed Apr 16 14:27:13 2014 raphael defreitas
-** Last update Mon Apr 21 20:26:30 2014 raphael defreitas
+** Last update Sat Apr 26 14:02:24 2014 raphael defreitas
 */
 
 #include	<signal.h>
@@ -27,20 +27,11 @@ static void	signal_handler(int signum)
   signal(SIGINT, &signal_handler);
 }
 
-static void	print_usage(FILE *file, char *progname)
-{
-  fprintf(file, "Usage: %s <port>\n", progname);
-}
-
 int		main(int argc, char **argv)
 {
-  if (argc < 2)
-    {
-      print_usage(stderr, argv[0]);
-      return (EXIT_FAILURE);
-    }
-  if (srv_ctor(&g_srv, atoi(argv[1]), argc > 2 ? atoi(argv[2]) : 300) ==
-      RET_FAILURE)
+  if (srv_ctor(&g_srv,
+	       argc > 1 ? atoi(argv[1]) : 6667,
+	       argc > 2 ? atoi(argv[2]) : 300) == RET_FAILURE)
     {
       srv_dtor(&g_srv);
       return (EXIT_FAILURE);

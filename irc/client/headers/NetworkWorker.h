@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Thu Apr 24 13:19:15 2014 raphael defreitas
-** Last update Fri Apr 25 17:00:16 2014 raphael defreitas
+** Last update Sat Apr 26 23:36:21 2014 raphael defreitas
 */
 
 #ifndef		NETWORKWORKER_H_
@@ -15,6 +15,7 @@
 # include	<glibmm/dispatcher.h>
 # include	<glibmm/threads.h>
 # include	<string>
+# include	<queue>
 
 # include	"network.h"
 
@@ -26,14 +27,13 @@ class NetworkWorker
 
   void start();
   void stop();
-  bool connect(const std::string& host, int port);
+  bool connect(const std::string& host, int port, const std::string& nick);
 
   Glib::Dispatcher& dispatcher();
-  bool stopped() const;
+  bool stopped();
 
-  bool hasInData();
-  std::string* getInData();
   void putOut(const char* format, ...);
+  std::queue<std::string>& getData();
 
  private:
   void run();
@@ -46,6 +46,8 @@ class NetworkWorker
 
   t_network m_network;
   bool m_stop;
+
+  std::queue<std::string> m_in_data;
 };
 
 #endif /* !NETWORKWORKER_H_*/

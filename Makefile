@@ -5,7 +5,7 @@
 ## Login   <defrei_r@epitech.net>
 ## 
 ## Started on  Wed Apr 16 14:28:43 2014 raphael defreitas
-## Last update Fri Apr 25 14:28:56 2014 raphael defreitas
+## Last update Sat Apr 26 17:33:33 2014 raphael defreitas
 ##
 
 ## Global settings
@@ -21,14 +21,14 @@ LIBS			=	libsocket liblist
 ## Common settings
 COMMON_SOURCES		=	$(shell find ./irc/common/sources -name "*.c" -type f)
 COMMON_OBJECTS		=	$(COMMON_SOURCES:.c=.o)
-COMMON_CFLAGS		=	-I ./irc/common/headers  -I ./libs/libsocket/headers -I ./libs/liblist/headers $(shell pkg-config --cflags glib-2.0)
+COMMON_CFLAGS		=	-I ./irc/common/headers  -I ./libs/libsocket/headers -I ./libs/liblist/headers $(shell pkg-config --cflags glib-2.0) -g
 
 ## Server settings
 SERVER_NAME		=	server
 SERVER_SOURCES		=	$(shell find ./irc/server/sources -name "*.c" -type f)
 SERVER_OBJECTS		=	$(SERVER_SOURCES:.c=.o)
 SERVER_CFLAGS		=	-I ./irc/server/headers
-SERVER_LFLAGS		=	-L ./libs/libsocket -lsocket
+SERVER_LFLAGS		=	-L ./libs/libsocket -lsocket -g
 SERVER_LFLAGS		+=	-L ./libs/liblist -llist
 
 ## Client settings
@@ -37,8 +37,8 @@ CLIENT_SOURCES		=	$(shell find ./irc/client/sources -name "*.c" -type f)
 CLIENT_CXXSOURCES	=	$(shell find ./irc/client/sources -name "*.cpp" -type f)
 CLIENT_OBJECTS		=	$(CLIENT_SOURCES:.c=.o)
 CLIENT_CXXOBJECTS	=	$(CLIENT_CXXSOURCES:.cpp=.o)
-CLIENT_CFLAGS		=	-I ./irc/client/headers
-CLIENT_CXXFLAGS		=	-I ./irc/client/headers $(shell pkg-config --cflags gtkmm-3.0)
+CLIENT_CFLAGS		=	-I ./irc/client/headers -g
+CLIENT_CXXFLAGS		=	-I ./irc/client/headers $(shell pkg-config --cflags gtkmm-3.0) -g
 CLIENT_LFLAGS		=	-L ./libs/libsocket -lsocket
 CLIENT_LFLAGS		+=	-L ./libs/liblist -llist
 CLIENT_LFLAGS		+=	$(shell pkg-config --libs gtkmm-3.0)

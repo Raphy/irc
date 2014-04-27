@@ -5,9 +5,10 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 25 13:50:34 2014 raphael defreitas
-** Last update Fri Apr 25 18:51:44 2014 raphael defreitas
+** Last update Sun Apr 27 00:33:12 2014 raphael defreitas
 */
 
+#include	<stdio.h>
 #include	<string.h>
 #include	<sys/select.h>
 
@@ -20,6 +21,7 @@ void		network_send(t_network *this)
   if (this->has_data_out && FD_ISSET(socket_fd(this->server), &this->write_fds))
     {
       socket_write(this->server, this->buf_out, strlen(this->buf_out));
+      printf("Write: %s\n", this->buf_out);
       this->buf_out[0] = 0;
       this->has_data_out = FALSE;
     }

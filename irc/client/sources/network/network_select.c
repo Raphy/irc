@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 25 13:45:12 2014 raphael defreitas
-** Last update Fri Apr 25 18:48:22 2014 raphael defreitas
+** Last update Sat Apr 26 18:23:44 2014 raphael defreitas
 */
 
 #include	<stdlib.h>
@@ -17,7 +17,6 @@ int			network_select(t_network *this)
 {
   int			ret;
 
-  printf("select\n");
   ret = select(FD_SETSIZE, &this->read_fds, &this->write_fds, NULL, &this->tv);
   if (ret == RET_ERROR)
     return (ret);

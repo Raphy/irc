@@ -5,7 +5,7 @@
 // Login   <defrei_r@epitech.net>
 // 
 // Started on  Wed Apr 23 18:37:33 2014 raphael defreitas
-// Last update Fri Apr 25 14:14:40 2014 raphael defreitas
+// Last update Sat Apr 26 15:51:27 2014 raphael defreitas
 //
 
 #include	<gdk/gdk.h>
@@ -66,7 +66,6 @@ void GeneralTab::sendMessage()
 {
   if (m_cmd_entry.get_text().length() > 0)
     {
-      //appendText(m_cmd_entry.get_text());
       m_signal_command_sent.emit(m_cmd_entry.get_text());
       m_cmd_entry.set_text("");
     }
