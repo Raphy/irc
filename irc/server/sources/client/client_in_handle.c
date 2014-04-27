@@ -1,11 +1,11 @@
 /*
 ** client_in_handle.c for my_irc in /home/raphy/Epitech/Tech_2/PSU_2013_myirc/irc/server/sources/client
-** 
+**
 ** Made by raphael defreitas
 ** Login   <defrei_r@epitech.net>
-** 
+**
 ** Started on  Sat Apr 19 03:46:02 2014 raphael defreitas
-** Last update Mon Apr 21 06:04:11 2014 raphael defreitas
+** Last update Sun Apr 27 18:10:15 2014 Barthelemy Delemotte
 */
 
 #include	<stdio.h>
@@ -37,7 +37,7 @@ void		client_in_handle(t_client *this)
 	    this->disconnected = TRUE;
 	}
       if (buf_len < 3 || (this->buf_in[buf_len - 2] != '\r' &&
-			   this->buf_in[buf_len - 1] != '\n'))
+			  this->buf_in[buf_len - 1] != '\n'))
 	this->has_data_in = FALSE;
     }
   else

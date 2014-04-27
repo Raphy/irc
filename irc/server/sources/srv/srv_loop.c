@@ -1,11 +1,11 @@
 /*
 ** srv_loop.c for my_irc in /home/raphy/Epitech/Tech_2/PSU_2013_myirc/irc/server/sources/srv
-** 
+**
 ** Made by raphael defreitas
 ** Login   <defrei_r@epitech.net>
-** 
+**
 ** Started on  Sat Apr 19 01:05:18 2014 raphael defreitas
-** Last update Tue Apr 22 16:17:18 2014 raphael defreitas
+** Last update Sun Apr 27 18:08:51 2014 Barthelemy Delemotte
 */
 
 #define		_GNU_SOURCE
@@ -37,7 +37,6 @@ static void	set_fds(t_srv *this)
       FD_SET(socket_fd(client_socket(client)), &this->read_fds);
       if (client->has_data_out)
 	{
-	  //client_out_handle(client); /* Select met du temps pour écrire ... */
 	  FD_SET(socket_fd(client_socket(client)), &this->write_fds);
 	}
     }
@@ -64,7 +63,6 @@ static void	select_treat_clients(t_srv *this)
 	    }
 	}
     }
-
 }
 
 static void	select_new_client(t_srv *this)
@@ -125,7 +123,8 @@ void			srv_loop(t_srv *this)
   printf("+--------------------------------------------------------------+\n");
   printf("Hostname: %s\tTimeout: %d\n", this->hostname, this->timeout);
   set_fds(this);
-  while ((ret = select(FD_SETSIZE, &this->read_fds, &this->write_fds, NULL, &tv)) >= 0)
+  while ((ret = select(FD_SETSIZE, &this->read_fds,
+		       &this->write_fds, NULL, &tv)) >= 0)
     {
       if (ret == 0)
 	{
