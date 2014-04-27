@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Fri Apr 18 22:52:32 2014 raphael defreitas
-** Last update Mon Apr 21 22:18:22 2014 raphael defreitas
+** Last update Sun Apr 27 21:49:25 2014 raphael defreitas
 */
 
 #define		_GNU_SOURCE
@@ -57,6 +57,8 @@ static void	init_cmd_handlers(t_srv *this)
   this->cmd_handlers[c++] = cmd_new(this, &cmd_quit);
   this->cmd_handlers[c++] = cmd_new(this, &cmd_who);
   this->cmd_handlers[c++] = cmd_new(this, &cmd_whois);
+  this->cmd_handlers[c++] = cmd_new(this, &cmd_names);
+  this->cmd_handlers[c++] = cmd_new(this, &cmd_part);
   this->cmd_handlers[c] = NULL;
 }
 

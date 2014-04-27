@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Fri Apr 25 00:35:59 2014 raphael defreitas
-** Last update Fri Apr 25 18:44:51 2014 raphael defreitas
+** Last update Sun Apr 27 22:00:17 2014 raphael defreitas
 */
 
 #ifndef		NETWORK_H_
@@ -20,7 +20,7 @@ G_BEGIN_DECLS
 
 # include	"defs.h"
 # include	"socket.h"
-  
+
   typedef	struct
   {
     t_socket	*server;
