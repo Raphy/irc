@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 22:06:36 2014 raphael defreitas
-** Last update Mon Apr 21 08:54:20 2014 raphael defreitas
+** Last update Sun Apr 27 22:10:23 2014 raphael defreitas
 */
 
 #define		_GNU_SOURCE
@@ -49,8 +49,6 @@ t_bool		cmd_quit(t_cmd *cmd, t_client *client, char **tokens)
   if (strcmp(tokens[0], "QUIT") != 0)
     return (FALSE);
   srv = (t_srv *)cmd->data;
-  if (tokens[1])
-    tokens[1]++;
   warn(client, tokens[1]);
   client->disconnected = TRUE;
   return (TRUE);

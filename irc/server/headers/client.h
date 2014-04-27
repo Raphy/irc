@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 **
 ** Started on  Sat Apr 19 03:36:40 2014 raphael defreitas
-** Last update Mon Apr 21 18:43:07 2014 raphael defreitas
+** Last update Sun Apr 27 22:18:07 2014 raphael defreitas
 */
 
 #ifndef		CLIENT_H_

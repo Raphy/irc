@@ -5,7 +5,7 @@
 ** Login   <defrei_r@epitech.net>
 ** 
 ** Started on  Sat Apr 19 22:06:36 2014 raphael defreitas
-** Last update Sun Apr 27 21:57:19 2014 raphael defreitas
+** Last update Sun Apr 27 22:03:52 2014 raphael defreitas
 */
 
 #define		_GNU_SOURCE
@@ -40,6 +40,7 @@ t_bool		cmd_part(t_cmd *cmd, t_client *client, char **tokens)
 {
   t_srv		*srv;
   t_channel	*channel;
+  t_item	*it;
 
   if (strcmp(tokens[0], "PART") != 0)
     return (FALSE);
@@ -47,6 +48,11 @@ t_bool		cmd_part(t_cmd *cmd, t_client *client, char **tokens)
   if (tokens[1])
     if ((channel = list_find(&client->channels, &channel_find_by_name,
 			     tokens[1], IT_DATA)))
-      warn(client, channel, tokens[2]);
+      {
+	warn(client, channel, tokens[2]);
+	if ((it = list_find(&channel->clients, client_find_by_ptr, client,
+			    IT_ITEM)))
+	  list_unlink(&channel->clients, it);
+      }
   return (TRUE);
 }
